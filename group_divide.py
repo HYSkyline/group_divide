@@ -48,13 +48,16 @@ class Group_Divide:			# 以此次分组任务作为对象
         self.readlist()			# 读入人员名单文件，并分类置入字典
         self.divide()			# 按照赋予的随机值进行排序，并返回分组结果
 
+        f = open("group.txt", "w")			# 将结果写入当前目录的group.txt文本文件中
         for i in range(self.groupnum):			# 对分组列表的第一元列表进行遍历，即分组输出结果
             for ii in range(len(self.grouplist[i])):			# 对第二元列表中的人员进行遍历
                 if ii == 0:			# 第二元列表的首位
                     print self.grouplist[i][ii]			# 输出组长姓名
                 else:			# 第二元列表非首位
                     print "...." + self.grouplist[i][ii]			# 输出组员姓名
-
+                f.writelines(self.grouplist[i][ii] + "\t" + str(i) + "\n")			# 记录格式为XXX\t1\n,XXX为姓名，1为组别
+        f.close()			# 关闭文件
+				
 if __name__ == "__main__":			# 当前文件即为执行程序
     print "Link Start!"			# 开始连接！
     print "==" * 6			# 分割线
@@ -67,5 +70,15 @@ if __name__ == "__main__":			# 当前文件即为执行程序
     print "There are " + str(group.groupnum) + " groups to be divided."			# 确认分组数量
     print "==" * 6			# 分割线
     group.printlist()			# 输出分组结果
-    print "==" * 6			# 分割线
+    while True:			# 持续循环
+        eof = raw_input("重新计算?(Y/N):".decode("utf-8").encode("gbk"))			# 是否重新计算分组结果
+        print "==" * 6			# 分割线
+        if eof != "N":			# 确认不取消重新计算
+            group = Group_Divide(mission_name, fpath, int(groupnum))			# 实例化分组对象
+            print "Mission name:" + group.mission_name			# 确认项目名称
+            print "There are " + str(group.groupnum) + " groups to be divided."			# 确认分组数量
+            print "==" * 6			# 分割线
+            group.printlist()			# 输出分组结果
+        if eof == "N":			# 取消重新计算
+			break			# 跳出循环
     print "Link Logout."			# 断开连接

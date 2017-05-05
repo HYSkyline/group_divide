@@ -15,6 +15,7 @@ class Group_Divide:			# 以此次分组任务作为对象
         self.chiefdic = {}			# 组长所在字典，存储姓名与随机值
         self.memberdic = {}			# 组员所在字典，存储姓名与随机值
 
+
     def readlist(self):			# 读取人员名单，并按类别置入字典
         f = open(self.fpath, "r")			# 打开人员名单文件
         contents = f.readlines()			# 读取文件内容(内容形式为"XXX\t0\n"，其中XXX为名称，0/1为组员/组长)
@@ -33,6 +34,7 @@ class Group_Divide:			# 以此次分组任务作为对象
 
         if self.chiefdic:			# 人员名单中含类别区分，即设置组长
             self.groupnum = len(self.chiefdic)			# 按组长的数量重新计算分组数
+
 
     def divide(self):			# 按照赋予的随机值进行排序，并返回分组结果
         self.grouplist = [[] for i in range(0, self.groupnum)]			# 初始化名单为二元列表，第一元为分组，第二元为分人员
@@ -57,6 +59,7 @@ class Group_Divide:			# 以此次分组任务作为对象
                     print "...." + self.grouplist[i][ii]			# 输出组员姓名
                 f.writelines(self.grouplist[i][ii] + "\t" + str(i) + "\n")			# 记录格式为XXX\t1\n,XXX为姓名，1为组别
         f.close()			# 关闭文件
+			
 				
 if __name__ == "__main__":			# 当前文件即为执行程序
     print "Link Start!"			# 开始连接！
